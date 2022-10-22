@@ -1,0 +1,39 @@
+<h1><%= @user.name %></h1>
+
+<p><b>Email: </b><%= @user.email %></p>
+
+<ul>
+  <li><%= link_to "Edit", edit_user_path(@user) %></li>
+  <li><%= link_to "Delete", user_path(@user), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
+</ul>
+
+<h2>Posts</h2>
+<% @user.posts.each do |post| %>
+  <p>
+    <strong>Poster:</strong>
+    <%= post.poster %>
+  </p>
+
+  <p>
+    <strong>Post:</strong>
+    <%= post.body %>
+  </p>
+<% end %>
+
+<h2>Add a post:</h2>
+<%= form_with model: [ @user, @user.posts.build ] do |form| %>
+  <p>
+    <%= form.label :poster %><br>
+    <%= form.text_field :poster %>
+  </p>
+  <p>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
